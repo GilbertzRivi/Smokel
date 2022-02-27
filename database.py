@@ -35,7 +35,7 @@ class Database:
         self.cursor.execute(f'UPDATE {table} SET {column} WHERE {condition}')
         self.connection.commit()
 
-if len(argv) > 1 and argv[1] == 'setup':
+if __name__ == '__main__':
     print('Creating database')
     db = Database(getenv('DB_NAME'))
     db.create_table("""CREATE TABLE IF NOT EXISTS black_list (
@@ -64,4 +64,14 @@ if len(argv) > 1 and argv[1] == 'setup':
         message_id INTEGR,
         channel_id INTEGR,
         is_excluded INTEGR);
+        """)
+    db.create_table("""CREATE TABLE IF NOT EXISTS invites (
+        user_id INTEGR PRIMARY KEY,
+        timestamp INTEGR);
+        """)
+    db.create_table("""CREATE TABLE IF NOT EXISTS mutes (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGR,
+        role INTEGR,
+        timestamp INTEGR);
         """)

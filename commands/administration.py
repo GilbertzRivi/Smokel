@@ -93,7 +93,7 @@ async def set_command_channel(ctx, channel: discord.TextChannel):
     channel = client.get_channel(result[0])
     await ctx.send(f'Pomyślnie ustawiono kanał komend na {channel.mention}')
 
-@set_veryfication_channel.error
+@set_command_channel.error
 async def set_command_channel_error(ctx, _):
     await ctx.send('Nie podano kanału')
 
@@ -221,3 +221,21 @@ async def exclude(ctx, *, role: discord.Role):
 async def exclude_error(ctx, _):
     await ctx.send('Nie podano roli')
 
+@client.command()
+async def set_tech_channel(ctx, channel: discord.TextChannel):
+    if not ctx.author.guild_permissions.administrator:
+        await ctx.send('Nie masz uprawnień')
+        return
+
+    db = Database(getenv('DB_NAME'))
+    result = db.fetch('value', 'config', 'name="tech_channel_id"').fetchone()
+    if result is not None:
+        db.delete('config', 'name="tech_channel_id"')
+    db.insert('config', None, 'tech_channel_id', channel.id, None)
+    result = db.fetch('value', 'config', 'name="tech_channel_id"').fetchone()
+    channel = client.get_channel(result[0])
+    await ctx.send(f'Pomyślnie ustawiono kanał techniczny na {channel.mention}')
+
+@set_tech_channel.error
+async def set_tech_channel_error(ctx, _):
+    await ctx.send('Nie podano kanału')
