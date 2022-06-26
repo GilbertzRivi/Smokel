@@ -1,0 +1,8 @@
+python3 database setup
+ustawić serwer moze tylko host
+najpierw ustaw w bocie serwer
+potem moze zwykly admin
+nastepnie role dzielace
+potem main chan, veryfication chan, command chan, tech chan
+moderation role, newbie role veryficated role, mute role, logs chan
+potem ustawić role wyłączone z autoroli
