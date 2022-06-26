@@ -1,2 +1,2 @@
 # Smokel
-Bot Im developing for my discord server
+Bot Im developing for my discord guild
